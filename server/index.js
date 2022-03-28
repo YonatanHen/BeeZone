@@ -14,18 +14,30 @@ app.listen(port, () => {
     console.log('app is listen to port ' + port )
 })
 
-app.get('/get-temperature', async (req,res) => {
+app.get('/get-temperature/:sample', async (req,res) => {
+    const sampleNum = req.params.sample
+
     request.get({
-        url: `https://beezone-b24ac-default-rtdb.europe-west1.firebasedatabase.app/0.json`,
+        url: `https://beezone-b24ac-default-rtdb.europe-west1.firebasedatabase.app/${sampleNum}.json`,
         json: {}
+        
     }, (err, response, body) => {
         if (err) {
-            return res.status(400).send(err);
+
+            return res.status(err.statusCode).send(err)
+
         } else if (response.statusCode === 200) {
-            console.log(response.body)
-            return res.status(200).send()
+            
+            //Organize the relevant details
+            const data = {
+                temperature: response.body.T85,
+                humidity: response.body.RH85
+            }
+
+            return res.status(200).send(JSON.stringify(data))
+
         } else {
-            console.log(response.statusCode);
+            res.status(400).send()
         }
     })
 })
