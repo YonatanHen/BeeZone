@@ -1,10 +1,10 @@
 const tf = require('@tensorflow/tfjs');
-const iris = require('./iris.json');
-const irisTesting = require('./iris-testing.json');
 
 // my data:
 const sensor = require('./sensor.json');
 const sensorTesting = require('./sensor-testing.json');
+
+// notice
 
 const trainingData = tf.tensor2d(sensor.map((item) => [item.RH85, item.T85]));
 
@@ -45,13 +45,13 @@ model.add(
 model.add(
 	tf.layers.dense({
 		inputShape: [5],
-		activation: 'sigmoid',
+		activation: 'relu',
 		units: 2,
 	})
 );
 model.add(
 	tf.layers.dense({
-		activation: 'sigmoid',
+		activation: 'softmax',
 		units: 2,
 	})
 );
@@ -62,7 +62,15 @@ model.compile({
 
 // train/fit our network
 const startTime = Date.now();
-model.fit(trainingData, outputData, { epochs: 10 }).then((history) => {
-	console.log(Date.now() - startTime, 'ms');
-	model.predict(testingData).print();
-});
+
+const fitModel = async () => {
+	await model.fit(trainingData, outputData, { epochs: 10 }).then((history) => {
+		console.log(Date.now() - startTime, 'ms');
+		const data = model.predict(testingData).data();
+
+		// the needed data
+		data.then((data) => console.log(data));
+	});
+};
+
+fitModel();
