@@ -37,7 +37,13 @@
   }
 }
 
-.temp-chart {
-  width: 80%;
-  height: 40%;
+
+
+.dashboard-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dashboard-container .chart {
+  flex: 1 1;
 }

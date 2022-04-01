@@ -4,7 +4,13 @@ import { Dashboard } from './dashboard';
 
 function App() {
   return (
-    <Dashboard />
+    <div>
+      <div>
+        <h1>Dashboard & charts goes here!</h1>
+      </div>
+      <Dashboard />
+    </div>
+
   );
 }
 

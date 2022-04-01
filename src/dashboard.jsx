@@ -5,7 +5,20 @@ import axios from 'axios'
 let num = 0
 
 export const Dashboard = (props) => {
-	const [data, setData] = useState({
+	const [tempData, setTempData] = useState({
+		labels: [],
+		datasets: [
+			{
+				label: 'Temperature',
+				data: [],
+				fill: false,
+				borderColor: '#42A5F5',
+				tension: 0.4,
+			},
+		],
+	})
+
+	const [humData, setHumData] = useState({
 		labels: [],
 		datasets: [
 			{
@@ -20,6 +33,7 @@ export const Dashboard = (props) => {
 
 	const [dates, setDates] = useState([])
 	const [temperatures, setTemperatures] = useState([])
+	const [humidities, setHumidities] = useState([])
 
 	useEffect(() => {
 		const interval = setInterval(async () => {
@@ -29,9 +43,11 @@ export const Dashboard = (props) => {
 
 			setTemperatures([...temperatures, resData.temperature])
 
+			setHumidities([...humidities, resData.humidity])
+
 			setDates([...dates, resData.date])
 
-			setData({
+			setTempData({
 				labels: dates,
 				datasets: [
 					{
@@ -40,6 +56,19 @@ export const Dashboard = (props) => {
 						borderColor: '#42A5F5',
 						tension: 0.4,
 						data: temperatures,
+					},
+				],
+			})
+
+			setHumData({
+				labels: dates,
+				datasets: [
+					{
+						label: 'Humiditiy',
+						fill: false,
+						borderColor: 'green',
+						tension: 0.4,
+						data: humidities,
 					},
 				],
 			})
@@ -53,14 +82,19 @@ export const Dashboard = (props) => {
 
 	return (
 		<div>
-			<h1>Dashboard & charts goes here!</h1>
-			<div className='card'>
+			<div className='dashboard-container'>
 				<Chart
-					className="temp-chart"
+					className='chart'
 					type='line'
-					data={data}
+					data={tempData}
 					//  options={basicOptions}
 				/>
+					<Chart
+						className='chart'
+						type='line'
+						data={humData}
+						//  options={basicOptions}
+					/>
 			</div>
 		</div>
 	)
