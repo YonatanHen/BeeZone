@@ -58,8 +58,6 @@ router.get('/get-data', async (req, res) => {
 	);
 });
 
-router.get('/*', async (req, res) => {
-	res.send('BeeZone server');
-});
+
 
 module.exports = router;
