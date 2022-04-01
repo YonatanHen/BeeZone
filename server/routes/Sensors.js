@@ -17,6 +17,7 @@ router.get('/get-data/:sample', async (req, res) => {
 				const data = {
 					temperature: response.body.T85,
 					humidity: response.body.RH85,
+					date: response.body.DateTime
 				};
 				console.log(data);
 				return res.status(200).send(JSON.stringify(data));
