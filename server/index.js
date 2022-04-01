@@ -14,3 +14,7 @@ const port = process.env.port || 8000;
 app.listen(port, () => {
 	console.log('app is listen to port ' + port);
 });
+
+app.get('/*', async (req, res) => {
+	res.send('BeeZone server');
+});
