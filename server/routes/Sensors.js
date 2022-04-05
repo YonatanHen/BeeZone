@@ -50,7 +50,7 @@ router.get('/get-data', async (req, res) => {
 					delete data[i]['T85-Tamb'];
 					delete data[i]['Tamb'];
 				}
-				return res.status(200).send(Object.assign({}, data));
+				return res.status(200).send(Object.assign([], data));
 			} else {
 				res.status(400).send();
 			}
