@@ -6,9 +6,7 @@ import SignIn from './sign-in/sign-in';
 function App() {
 	return (
 		<div>
-			<div>
-				<h1>Dashboard & charts goes here!</h1>
-			</div>
+			<div></div>
 
 			<Dashboard />
 			{/* <SignIn /> */}

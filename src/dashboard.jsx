@@ -1,6 +1,47 @@
+// React:
 import React, { Component, useEffect, useState } from 'react';
+
+// Apis:
 import { Chart } from 'primereact/chart';
 import axios from 'axios';
+
+// Style:
+import StyledComponent from 'styled-components';
+import tw from 'twin.macro';
+
+const DashboardContainer = StyledComponent.div`
+	${tw`
+		
+		
+		width[90%]
+		height[100%]
+		grid
+		gap-2
+	`}
+`;
+
+const ChartsContainer1 = tw.div`
+	
+	bg-green-300/20
+	flex
+	flex-col
+	md:flex-row
+	gap-2
+	
+	`;
+const ChartsContainer2 = tw.div`
+	bg-purple-300
+	
+	`;
+
+const ChartPanel = StyledComponent.div`
+	${tw`
+		bg-blue-400/20
+		md:w-1/2 
+		w-full
+		m-auto
+	`}
+`;
 
 let num = 0;
 
@@ -81,21 +122,28 @@ export const Dashboard = (props) => {
 	});
 
 	return (
-		<div>
-			<div className='dashboard-container'>
-				<Chart
-					className='chart'
-					type='line'
-					data={tempData}
-					//  options={basicOptions}
-				/>
-				<Chart
-					className='chart'
-					type='line'
-					data={humData}
-					//  options={basicOptions}
-				/>
-			</div>
-		</div>
+		<DashboardContainer>
+			<ChartsContainer1>
+				<ChartPanel>
+					<Chart
+						className='chart'
+						type='line'
+						data={tempData}
+
+						//  options={basicOptions}
+					/>
+				</ChartPanel>
+				<ChartPanel>
+					{' '}
+					<Chart
+						className='chart'
+						type='line'
+						data={tempData}
+						//  options={basicOptions}
+					/>
+				</ChartPanel>
+			</ChartsContainer1>
+			<ChartsContainer2>Continue here...</ChartsContainer2>
+		</DashboardContainer>
 	);
 };
