@@ -33,11 +33,9 @@ class SignUpForm extends Component {
     const res = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAZBOSJAJEyqr6uAHwxmz-IpFC8gLdErdg`, {
           email: this.state.email,
           password: this.state.password,
-          // fullName: this.state.name,
+          fullName: this.state.name,
           returnSecureToken: true
     })
-
-    console.log(resData)
 
     console.log("The form was submitted with the following data:");
     console.log(this.state);
