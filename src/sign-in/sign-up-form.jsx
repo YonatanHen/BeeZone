@@ -35,7 +35,8 @@ class SignUpForm extends Component {
           password: this.state.password,
           fullName: this.state.name,
           returnSecureToken: true
-    })
+    }).then(() => alert(`${this.state.email} is a new user!`))
+    .catch(() => alert("Can't sign up! An error occured!"))
 
     console.log("The form was submitted with the following data:");
     console.log(this.state);
