@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
@@ -6,9 +7,9 @@ class SignUpForm extends Component {
     super();
 
     this.state = {
-      email: "",
-      password: "",
-      name: "",
+      email: "dsds@dsd.com",
+      password: "123456",
+      name: "Yonatan",
       hasAgreed: false
     };
 
@@ -26,8 +27,17 @@ class SignUpForm extends Component {
     });
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
+
+    const res = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAZBOSJAJEyqr6uAHwxmz-IpFC8gLdErdg`, {
+          email: this.state.email,
+          password: this.state.password,
+          // fullName: this.state.name,
+          returnSecureToken: true
+    })
+
+    console.log(resData)
 
     console.log("The form was submitted with the following data:");
     console.log(this.state);
