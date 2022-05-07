@@ -1,13 +1,18 @@
-import {BrowserRouter as Router, Route, Switch ,Redirect} from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect,
+} from 'react-router-dom';
 import './App.css';
 import Lobby from './components/lobby';
 import ErrorPage from './components/errorPage';
-import dashboard from './components/dashboard';
+import {Dashboard} from './components/dashboard';
 
 function App() {
-  return (
-    <div>
-        <Switch>
+	return (
+		<div>
+			{/* <Switch>
          <Route exact path={["/", "/lobby"]}>
            <Redirect to="/lobby#/sign-up" />
             <Lobby />
@@ -15,10 +20,11 @@ function App() {
           <Route path="*">
             <ErrorPage />
           </Route>
-        </Switch>
-      {/* <Lobby /> */}
-    </div>
-  );
+        </Switch> */}
+			<Dashboard />
+			{/* <Lobby /> */}
+		</div>
+	);
 }
 
 export default App;
