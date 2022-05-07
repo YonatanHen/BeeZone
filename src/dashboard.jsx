@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Chart } from 'primereact/chart';
 import axios from 'axios';
-
+import Webcam from 'react-webcam';
 let num = 0;
 
 export const Dashboard = (props) => {
@@ -34,6 +34,7 @@ export const Dashboard = (props) => {
 	const [dates, setDates] = useState([]);
 	const [temperatures, setTemperatures] = useState([]);
 	const [humidities, setHumidities] = useState([]);
+	const [clicked, setClicked] = useState(false);
 
 	useEffect(() => {
 		const interval = setInterval(async () => {
@@ -80,6 +81,8 @@ export const Dashboard = (props) => {
 		return () => clearInterval(interval);
 	});
 
+	const WebcamComponent = () => <Webcam />;
+
 	return (
 		<div>
 			<div className='dashboard-container'>
@@ -96,6 +99,8 @@ export const Dashboard = (props) => {
 					//  options={basicOptions}
 				/>
 			</div>
+			<button onClick={() => setClicked(!clicked)}> Click Me </button>
+			{clicked && <Webcam />}
 		</div>
 	);
 };
