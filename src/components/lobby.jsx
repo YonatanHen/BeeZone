@@ -1,17 +1,25 @@
+import { HashRouter as Router, BrowserRouter, Route, NavLink, Switch, Redirect } from "react-router-dom";
+import SignUp from "./auth/sign-up";
+import SignIn from "./auth/sign-in";
 import React, { Component } from "react";
-import { HashRouter as Router, Route, NavLink } from "react-router-dom";
-import SignUpForm from "./sign-up-form";
-import SignInForm from "./sign-in-form";
 
-import "./sign-in.css";
+import "./lobby.css";
 
-class SignIn extends Component {
+class Lobby extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
-      <Router basename="/react-auth-ui/">
+      <Router>
+
         <div className="signIn">
-        <div className="appAside" />
+          <div className="appAside" />
           <div className="appForm">
+
+
             <div className="pageSwitcher">
               <NavLink
                 to="/sign-in"
@@ -22,7 +30,7 @@ class SignIn extends Component {
               </NavLink>
               <NavLink
                 exact
-                to="/"
+                to="/sign-up"
                 activeClassName="pageSwitcherItem-active"
                 className="pageSwitcherItem"
               >
@@ -41,7 +49,7 @@ class SignIn extends Component {
               or{" "}
               <NavLink
                 exact
-                to="/"
+                to="/sign-up"
                 activeClassName="formTitleLink-active"
                 className="formTitleLink"
               >
@@ -49,13 +57,16 @@ class SignIn extends Component {
               </NavLink>
             </div>
 
-            <Route exact path="/" component={SignUpForm} />
-            <Route path="/sign-in" component={SignInForm} />
+            {/* <Redirect to="lobby/sign-up" /> */}
+
+            <Route path="/sign-up" component={SignUp} />
+            <Route exact path="/sign-in" component={SignIn} />
           </div>
         </div>
       </Router>
+
     );
   }
 }
 
-export default SignIn;
+export default Lobby;

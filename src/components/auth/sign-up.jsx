@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-class SignUpForm extends Component {
+class SignUp extends Component {
   constructor() {
     super();
 
@@ -35,9 +35,8 @@ class SignUpForm extends Component {
           password: this.state.password,
           fullName: this.state.name,
           returnSecureToken: true
-    }).then(() => alert(`${this.state.email} is a new user!`))
-    .catch(() => alert("Can't sign up! An error occured!"))
-
+    })
+    console.log(res);
     console.log("The form was submitted with the following data:");
     console.log(this.state);
   }
@@ -116,4 +115,4 @@ class SignUpForm extends Component {
     );
   }
 }
-export default SignUpForm;
+export default SignUp;
