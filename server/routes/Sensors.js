@@ -1,19 +1,33 @@
 const request = require('request');
 const router = require('express').Router();
 require('../sensor/Sensor');
+const { getTestData, checkData, isOk } = require('../ML/learn');
 var { StartSensor } = require('../sensor/Sensor');
 
 router.get('/get-data/', async (req, res) => {
 	///Your code goes here
 	var { temperature, humidity } = StartSensor();
 
-	const data = {
-		temperature: temperature || 0,
-		humidity: humidity || 0,
-		date: new Date().toLocaleTimeString(),
-	};
-
-	res.status(200).send(JSON.stringify(data));
+	// Check if the ML approves the data:
+	let Sensorsdata = [humidity, temperature];
+	checkData(getTestData(Sensorsdata));
+	// console.log(isOk);
+	if (isOk) {
+		const data = {
+			temperature: temperature || 0,
+			humidity: humidity || 0,
+			date: new Date().toLocaleTimeString(),
+		};
+		// console.log('here!');
+		res.status(200).send(JSON.stringify(data));
+	} else {
+		const data = {
+			temperature: temperature || 0,
+			humidity: humidity || 0,
+			date: new Date().toLocaleTimeString(),
+		};
+		res.status(500).send(JSON.stringify(data));
+	}
 });
 
 router.get('/get-data', async (req, res) => {

@@ -12,7 +12,7 @@ const parser = new parsers.Readline({
 var port = new SerialPort('/COM4', {
 	baudRate: 9600,
 	dataBits: 8,
-	parity: 'none',
+	parity: 'none', 
 	stopBits: 1,
 	flowControl: false,
 });
