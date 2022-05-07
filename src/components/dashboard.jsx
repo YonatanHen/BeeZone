@@ -1,8 +1,8 @@
-import React, { Component, useEffect, useState } from 'react'
-import { Chart } from 'primereact/chart'
-import axios from 'axios'
-
-let num = 0
+import React, { Component, useEffect, useState } from 'react';
+import { Chart } from 'primereact/chart';
+import axios from 'axios';
+import Webcam from 'react-webcam';
+let num = 0;
 
 export const Dashboard = (props) => {
 	const [tempData, setTempData] = useState({
@@ -16,7 +16,7 @@ export const Dashboard = (props) => {
 				tension: 0.4,
 			},
 		],
-	})
+	});
 
 	const [humData, setHumData] = useState({
 		labels: [],
@@ -29,23 +29,24 @@ export const Dashboard = (props) => {
 				tension: 0.4,
 			},
 		],
-	})
+	});
 
-	const [dates, setDates] = useState([])
-	const [temperatures, setTemperatures] = useState([])
-	const [humidities, setHumidities] = useState([])
+	const [dates, setDates] = useState([]);
+	const [temperatures, setTemperatures] = useState([]);
+	const [humidities, setHumidities] = useState([]);
+	const [clicked, setClicked] = useState(false);
 
 	useEffect(() => {
 		const interval = setInterval(async () => {
-			const response = await axios.get(`http://127.0.0.1:8000/get-data/${num}`)
+			const response = await axios.get(`http://127.0.0.1:8000/get-data/`);
 
-			const resData = response.data
+			const resData = response.data;
 
-			setTemperatures([...temperatures, resData.temperature])
+			setTemperatures([...temperatures, resData.temperature]);
 
-			setHumidities([...humidities, resData.humidity])
+			setHumidities([...humidities, resData.humidity]);
 
-			setDates([...dates, resData.date])
+			setDates([...dates, resData.date]);
 
 			setTempData({
 				labels: dates,
@@ -58,7 +59,7 @@ export const Dashboard = (props) => {
 						data: temperatures,
 					},
 				],
-			})
+			});
 
 			setHumData({
 				labels: dates,
@@ -71,14 +72,16 @@ export const Dashboard = (props) => {
 						data: humidities,
 					},
 				],
-			})
-			num += 1
-		}, 3000)
+			});
+			num += 1;
+		}, 3000);
 
-		console.log(dates)
-		console.log(temperatures)
-		return () => clearInterval(interval)
-	})
+		console.log(dates);
+		console.log(temperatures);
+		return () => clearInterval(interval);
+	});
+
+	const WebcamComponent = () => <Webcam />;
 
 	return (
 		<div>
@@ -89,13 +92,15 @@ export const Dashboard = (props) => {
 					data={tempData}
 					//  options={basicOptions}
 				/>
-					<Chart
-						className='chart'
-						type='line'
-						data={humData}
-						//  options={basicOptions}
-					/>
+				<Chart
+					className='chart'
+					type='line'
+					data={humData}
+					//  options={basicOptions}
+				/>
 			</div>
+			<button onClick={() => setClicked(!clicked)}> Click Me </button>
+			{clicked && <Webcam />}
 		</div>
-	)
-}
+	);
+};
