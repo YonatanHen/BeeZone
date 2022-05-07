@@ -39,42 +39,45 @@ export const Dashboard = (props) => {
 	useEffect(() => {
 		const interval = setInterval(async () => {
 			const response = await axios.get(`http://127.0.0.1:8000/get-data/`);
+			if (response.status === 200) {
+				const resData = response.data;
 
-			const resData = response.data;
+				setTemperatures([...temperatures, resData.temperature]);
 
-			setTemperatures([...temperatures, resData.temperature]);
+				setHumidities([...humidities, resData.humidity]);
 
-			setHumidities([...humidities, resData.humidity]);
+				setDates([...dates, resData.date]);
 
-			setDates([...dates, resData.date]);
+				setTempData({
+					labels: dates,
+					datasets: [
+						{
+							label: 'Temperature',
+							fill: false,
+							borderColor: '#42A5F5',
+							tension: 0.4,
+							data: temperatures,
+						},
+					],
+				});
 
-			setTempData({
-				labels: dates,
-				datasets: [
-					{
-						label: 'Temperature',
-						fill: false,
-						borderColor: '#42A5F5',
-						tension: 0.4,
-						data: temperatures,
-					},
-				],
-			});
-
-			setHumData({
-				labels: dates,
-				datasets: [
-					{
-						label: 'Humiditiy',
-						fill: false,
-						borderColor: 'green',
-						tension: 0.4,
-						data: humidities,
-					},
-				],
-			});
-			num += 1;
-		}, 3000);
+				setHumData({
+					labels: dates,
+					datasets: [
+						{
+							label: 'Humiditiy',
+							fill: false,
+							borderColor: 'green',
+							tension: 0.4,
+							data: humidities,
+						},
+					],
+				});
+				num += 1;
+			} else {
+				alert('bad temperature or humidity');
+			}
+		}, 5000);
 
 		console.log(dates);
 		console.log(temperatures);
