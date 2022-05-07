@@ -5,7 +5,7 @@ import {
   InstagramLoginButton
 } from "react-social-login-buttons";
 
-class SignInForm extends Component {
+class SignIn extends Component {
   constructor() {
     super();
 
@@ -91,4 +91,4 @@ class SignInForm extends Component {
   }
 }
 
-export default SignInForm;
+export default SignIn;

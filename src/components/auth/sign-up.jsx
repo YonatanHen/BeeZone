@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-class SignUpForm extends Component {
+class SignUp extends Component {
   constructor() {
     super();
 
@@ -36,7 +36,7 @@ class SignUpForm extends Component {
           fullName: this.state.name,
           returnSecureToken: true
     })
-
+    console.log(res);
     console.log("The form was submitted with the following data:");
     console.log(this.state);
   }
@@ -115,4 +115,4 @@ class SignUpForm extends Component {
     );
   }
 }
-export default SignUpForm;
+export default SignUp;

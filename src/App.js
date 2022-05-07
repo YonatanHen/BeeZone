@@ -1,18 +1,23 @@
-import logo from './logo.svg';
+import {BrowserRouter as Router, Route, Switch ,Redirect} from "react-router-dom";
 import './App.css';
-import { Dashboard } from './dashboard';
-import SignIn from './sign-in/sign-in';
+import Lobby from './components/lobby';
+import ErrorPage from './components/errorPage';
+import dashboard from './components/dashboard';
 
 function App() {
   return (
     <div>
-      {/* <div>
-        <h1>Dashboard & charts goes here!</h1>
-      </div> */}
-      {/* <Dashboard /> */}
-      <SignIn />
+        <Switch>
+         <Route exact path={["/", "/lobby"]}>
+           <Redirect to="/lobby#/sign-up" />
+            <Lobby />
+          </Route>
+          <Route path="*">
+            <ErrorPage />
+          </Route>
+        </Switch>
+      {/* <Lobby /> */}
     </div>
-
   );
 }
 
