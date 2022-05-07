@@ -17,9 +17,11 @@
 		"react-router-dom": "^5.2.1",
 		"react-scripts": "5.0.0",
 		"react-social-login-buttons": "^3.6.0",
+		"serialport": "^10.4.0",
 		"styled-components": "^5.3.5",
 		"twin.macro": "^2.8.2",
 		"web-vitals": "^2.1.4"
+		
 	},
 	"scripts": {
 		"start": "craco start",

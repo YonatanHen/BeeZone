@@ -23,6 +23,6 @@
 		"nodemon": "^2.0.15",
 		"parcel": "^1.9.0",
 		"request": "^2.88.2",
-		"serialport": "^9.0.1"
+		"serialport": "^9.2.8"
 	}
 }

@@ -1,32 +1,21 @@
 const request = require('request');
 const router = require('express').Router();
+require('../sensor/Sensor');
+var { StartSensor } = require('../sensor/Sensor');
 
-router.get('/get-data/:sample', async (req, res) => {
-	const sampleNum = req.params.sample;
+router.get('/get-data/', async (req, res) => {
+	///Your code goes here
+	var { temperature, humidity } = StartSensor();
 
-	request.get(
-		{
-			url: `https://beezone-b24ac-default-rtdb.europe-west1.firebasedatabase.app/${sampleNum}.json`,
-			json: {},
-		},
-		(err, response, body) => {
-			if (err) {
-				return res.status(err.statusCode).send(err);
-			} else if (response.statusCode === 200) {
-				//Organize the relevant details
-				const data = {
-					temperature: response.body.T85,
-					humidity: response.body.RH85,
-					date: response.body.DateTime
-				};
-				console.log(data);
-				return res.status(200).send(JSON.stringify(data));
-			} else {
-				res.status(400).send();
-			}
-		}
-	);
+	const data = {
+		temperature: temperature || 0,
+		humidity: humidity || 0,
+		date: new Date(),
+	};
+
+	res.status(200).send(JSON.stringify(data));
 });
+
 router.get('/get-data', async (req, res) => {
 	// const sampleNum = req.params.sample;
 
@@ -58,7 +47,5 @@ router.get('/get-data', async (req, res) => {
 		}
 	);
 });
-
-
 
 module.exports = router;

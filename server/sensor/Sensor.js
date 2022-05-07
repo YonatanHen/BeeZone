@@ -1,6 +1,9 @@
 var SerialPort = require('serialport');
 const parsers = SerialPort.parsers;
 
+var humidity;
+var temperature;
+
 const parser = new parsers.Readline({
 	delimiter: '\r\n',
 });
@@ -16,8 +19,28 @@ var port = new SerialPort('/COM4', {
 
 port.pipe(parser);
 
-parser.on('data', function (data) {
-	console.log('Received data from port: ' + data);
-});
+const StartSensor = () => {
+	setTimeout(() => {}, 3100);
+	parser.on('data', function (data) {
+		humidity = parseFloat(data.substring(10, 15));
+		temperature = parseFloat(data.substring(32, 36));
+		// console.log(data.lenght);
+		// console.log(temperature);
+		// console.log(temperature);
+	});
 
+	return { temperature, humidity };
+};
 
+module.exports = { temperature, humidity, StartSensor };
+// router.get('/get-data/', async (req, res) => {
+// 	///Your code goes here
+
+// 	const data = {
+// 		temperature: temperature,
+// 		humidity: humidity,
+// 		date: new Date(),
+// 	};
+
+// 	res.status(200).send(JSON.stringify(data));
+// });
