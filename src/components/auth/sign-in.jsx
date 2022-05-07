@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { userService } from '../../services/user.service';
 import {
 	FacebookLoginButton,
 	InstagramLoginButton,
 } from 'react-social-login-buttons';
 
+
+
+
+
 class SignIn extends Component {
-  constructor() {
-    super();
+	constructor(props) {
+		super(props);
+
+		userService.logout();
 
 		this.state = {
-			email: '',
-			password: '',
+			email: 'paul@g.com',
+			password: '123456',
+			submitted: false,
+			loading: false,
+			error: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -19,21 +29,30 @@ class SignIn extends Component {
 	}
 
 	handleChange(event) {
-		console.log(event.target.value);
-		let target = event.target;
-		let value = target.type === 'checkbox' ? target.checked : target.value;
-		let name = target.name;
-
-		this.setState({
-			[name]: value,
-		});
+		const { name, value } = event.target;
+		this.setState({ [name]: value });
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
+		this.setState({ submitted: true });
 
-		console.log('The form was submitted with the following data:');
-		console.log(this.state);
+		const { email, password, returnUrl } = this.state;
+
+		// stop here if form is invalid
+		if (!(email && password)) {
+			return;
+		}
+
+		this.setState({ loading: true });
+		userService.login(email, password)
+			.then(
+				user => {
+					const { from } = this.props.location.state || { from: { pathname: "/dashboard" } };
+					this.props.history.push(from);
+				},
+				error => this.setState({ error, loading: false })
+			);
 	}
 
 	render() {
@@ -91,5 +110,6 @@ class SignIn extends Component {
 		);
 	}
 }
+
 
 export default SignIn;

@@ -7,9 +7,9 @@ class SignUp extends Component {
     super();
 
     this.state = {
-      email: "dsds@dsd.com",
-      password: "123456",
-      name: "Yonatan",
+      email: "",
+      password: "",
+      name: "",
       hasAgreed: false
     };
 
