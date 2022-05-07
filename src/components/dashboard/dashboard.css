@@ -1,0 +1,130 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+* {
+      margin: 0;
+      padding: 0;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+}
+
+body {
+      font-family: "Montserrat", sans-serif;
+}
+
+.dashboard-container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-block-start: 31px;
+}
+
+.chart {
+      width: 40%;
+      padding: 0 20px;
+}
+
+
+
+.navMenu {
+      display: flex;
+      justify-content: center;
+      padding: 50px;
+}
+
+.navMenu a {
+      color: #f6f4e6;
+      text-decoration: none;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      font-weight: 500;
+      display: inline-block;
+      width: 190px;
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+}
+
+.navMenu a:hover {
+      color: #fddb3a;
+}
+
+.navMenu button {
+      color: #f6f4e6;
+      text-decoration: none;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      font-weight: 500;
+      display: inline-block;
+      width: 100px;
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+}
+
+.navMenu button:hover {
+      color: #fddb3a;
+}
+
+.navMenu .dot {
+      width: 7px;
+      height: 7px;
+      background: #fddb3a;
+      border-radius: 50%;
+      opacity: 0;
+      -webkit-transform: translateX(-130px);
+      transform: translateX(-130px);
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+}
+
+
+.navMenu a:nth-child(1):hover~.dot {
+      -webkit-transform: translateX(-400px);
+      transform: translateX(-400px);
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      opacity: 1;
+}
+
+.navMenu a:nth-child(2):hover~.dot {
+      -webkit-transform: translateX(-245px);
+      transform: translateX(-245px);
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      opacity: 1;
+}
+
+.navMenu button:nth-child(3):hover~.dot {
+      -webkit-transform: translateX(-500px);
+      transform: translateX(-55px);
+      -webkit-transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease-in-out;
+      opacity: 1;
+}
+
+.cam-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 550px;
+      max-height: 400px;
+      margin: 0 auto;
+      padding: 20px;
+}
+
+.cam-button {
+      font-size: larger;
+      color: #fddb3a;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 700;
+}
+
+.chart-title {
+      font-size: larger;
+      color: #fddb3a;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-weight: 700;
+}
+
+h2 {
+      display: inline-block;
+      padding-inline-start: 4px;
+}

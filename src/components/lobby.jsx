@@ -1,9 +1,9 @@
-import { HashRouter as Router, BrowserRouter, Route, NavLink, Switch, Redirect } from "react-router-dom";
-import SignUp from "./auth/sign-up";
-import SignIn from "./auth/sign-in";
 import React, { Component } from "react";
-
+import { HashRouter as Router, NavLink, Route, useHistory } from "react-router-dom";
+import SignIn from "./auth/sign-in";
+import SignUp from "./auth/sign-up";
 import "./lobby.css";
+
 
 class Lobby extends Component {
   constructor(props) {
