@@ -1,6 +1,5 @@
 import React from "react";
-import "./errorPage.css";
-
+import "./404.css";
 function ErrorPage() {
       return <div>
             <section id="not-found">

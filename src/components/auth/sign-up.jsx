@@ -6,12 +6,12 @@ class SignUp extends Component {
 	constructor() {
 		super();
 
-		this.state = {
-			email: 'dsds@dsd.com',
-			password: '123456',
-			name: 'Yonatan',
-			hasAgreed: false,
-		};
+    this.state = {
+      email: "",
+      password: "",
+      name: "",
+      hasAgreed: false
+    };
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);

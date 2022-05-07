@@ -5,9 +5,10 @@ import {
 	Redirect,
 } from 'react-router-dom';
 import './App.css';
+import ErrorPage from './components/404/404';
 import Lobby from './components/lobby';
 import ErrorPage from './components/errorPage';
-import {Dashboard} from './components/dashboard';
+import { Dashboard } from './components/dashboard';
 
 function App() {
 	return (
@@ -17,9 +18,13 @@ function App() {
            <Redirect to="/lobby#/sign-up" />
             <Lobby />
           </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
           <Route path="*">
             <ErrorPage />
           </Route>
+
         </Switch> */}
 			<Dashboard />
 			{/* <Lobby /> */}
