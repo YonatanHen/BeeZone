@@ -10,7 +10,7 @@ router.get('/get-data/', async (req, res) => {
 	const data = {
 		temperature: temperature || 0,
 		humidity: humidity || 0,
-		date: new Date(),
+		date: new Date().toLocaleTimeString(),
 	};
 
 	res.status(200).send(JSON.stringify(data));
