@@ -7,8 +7,8 @@ import {
 import './App.css';
 import ErrorPage from './components/404/404';
 import Lobby from './components/lobby';
-import ErrorPage from './components/errorPage';
-import { Dashboard } from './components/dashboard';
+// import ErrorPage from './components/errorPage';
+import { Dashboard } from './components/dashboard/dashboard';
 
 function App() {
 	return (
