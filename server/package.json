@@ -12,16 +12,17 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"body-parser": "^1.19.2",
 		"@tensorflow/tfjs": "^0.11.6",
 		"@tensorflow/tfjs-node": "^0.1.7",
-		"parcel": "^1.9.0",
+		"body-parser": "^1.19.2",
 		"cors": "^2.8.5",
 		"env-cmd": "^10.1.0",
 		"express": "^4.17.3",
 		"firebase": "^9.6.10",
 		"firebase-admin": "^10.0.2",
 		"nodemon": "^2.0.15",
-		"request": "^2.88.2"
+		"parcel": "^1.9.0",
+		"request": "^2.88.2",
+		"serialport": "^9.0.1"
 	}
 }
