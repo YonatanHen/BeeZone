@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import { Chart } from 'primereact/chart';
 import axios from 'axios';
 import Webcam from 'react-webcam';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { userService } from '../../services/user.service';
 import { GiTreeBeehive } from 'react-icons/gi';
 import '../dashboard/dashboard.css';
@@ -25,9 +25,14 @@ const customStyles = {
 		backgroundBlendMode: 'overlay',
 	},
 };
-export const Dashboard = (props) => {
+export const Dashboard = ({ auth }) => {
+	console.log(auth);
 	const [ScreenshootClicked, setScreenshootClicked] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+
+	const [name, setName] = useState(sessionStorage.getItem('name'));
+	const [password, setPassword] = useState(sessionStorage.getItem('password'));
+	const [email, setEmail] = useState(sessionStorage.getItem('email'));
 
 	const [tempData, setTempData] = useState({
 		labels: [],
@@ -111,10 +116,13 @@ export const Dashboard = (props) => {
 			}
 		}, 5000);
 
-		console.log(dates);
-		console.log(temperatures);
+		// console.log(dates);
+		// console.log(temperatures);
 		return () => clearInterval(interval);
 	});
+	// if (!auth) {
+	// 	return <Redirect to='/' />;
+	// }
 
 	const refresh = () => {
 		window.location.reload(true);
@@ -177,6 +185,7 @@ export const Dashboard = (props) => {
 					onRequestClose={closeModal}
 					style={customStyles}
 					contentLabel='Example Modal'
+					ariaHideApp={false}
 				>
 					<h2
 						style={{
@@ -194,18 +203,6 @@ export const Dashboard = (props) => {
 					>
 						EDIT PERSONAL INFORMATION
 					</h2>
-					{/* <button
-						style={{
-							// backgroundColor: 'red',
-							float: 'right',
-							width: '1.4rem',
-							boxShadow: '0px 0px 0px 1px black',
-							borderRadius: '2px',
-						}}
-						onClick={closeModal}
-					>
-						X
-					</button> */}
 					<div
 						style={{
 							// backgroundColor: 'red',
@@ -234,6 +231,8 @@ export const Dashboard = (props) => {
 									width: '90%',
 									marginLeft: '.9rem',
 								}}
+								value={name || ''}
+								onChange={setName}
 							/>
 
 							<label
@@ -245,6 +244,8 @@ export const Dashboard = (props) => {
 							<input
 								id='password'
 								style={{ width: '90%', marginLeft: '.9rem' }}
+								value={password || ''}
+								onChange={setPassword}
 							/>
 
 							<label
@@ -257,6 +258,8 @@ export const Dashboard = (props) => {
 								type='email'
 								id='email'
 								style={{ width: '90%', marginLeft: '.9rem' }}
+								value={email || ''}
+								onChange={setEmail}
 							/>
 							<div style={{ display: 'flex', height: '40%' }}>
 								<button

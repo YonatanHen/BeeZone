@@ -1,115 +1,85 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { userService } from '../../services/user.service';
-import {
-	FacebookLoginButton,
-	InstagramLoginButton,
-} from 'react-social-login-buttons';
 
+const SignIn = (props) => {
+	const [email, setEmail] = useState('paul@g.com');
+	const [password, setPassword] = useState('123456');
+	const [submitted, setSubmitted] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
+	const history = useHistory();
 
+	userService.logout();
 
-
-
-class SignIn extends Component {
-	constructor(props) {
-		super(props);
-
-		userService.logout();
-
-		this.state = {
-			email: 'paul@g.com',
-			password: '123456',
-			submitted: false,
-			loading: false,
-			error: ''
-		};
-
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-	handleChange(event) {
-		const { name, value } = event.target;
-		this.setState({ [name]: value });
-	}
-
-	handleSubmit(event) {
+	const handleSubmit = (event) => {
 		event.preventDefault();
-		this.setState({ submitted: true });
-
-		const { email, password, returnUrl } = this.state;
+		setSubmitted(true);
 
 		// stop here if form is invalid
 		if (!(email && password)) {
 			return;
 		}
 
-		this.setState({ loading: true });
-		userService.login(email, password)
-			.then(
-				user => {
-					const { from } = this.props.location.state || { from: { pathname: "/dashboard" } };
-					this.props.history.push(from);
-				},
-				error => this.setState({ error, loading: false })
-			);
-	}
+		setLoading(true);
 
-	render() {
-		return (
-			<div className='formCenter'>
-				<form className='formFields' onSubmit={this.handleSubmit}>
-					<div className='formField'>
-						<label className='formFieldLabel' htmlFor='email'>
-							E-Mail Address
-						</label>
-						<input
-							type='email'
-							id='email'
-							className='formFieldInput'
-							placeholder='Enter your email'
-							name='email'
-							value={this.state.email}
-							onChange={this.handleChange}
-						/>
-					</div>
+		userService.login(email, password).then(
+			(user) => {
+				sessionStorage.setItem('email', email);
+				sessionStorage.setItem('password', password);
+				// console.log(user);
+				sessionStorage.setItem('name', user.displayName);
 
-					<div className='formField'>
-						<label className='formFieldLabel' htmlFor='password'>
-							Password
-						</label>
-						<input
-							type='password'
-							id='password'
-							className='formFieldInput'
-							placeholder='Enter your password'
-							name='password'
-							value={this.state.password}
-							onChange={this.handleChange}
-						/>
-					</div>
-
-					<div className='formField'>
-						<button className='formFieldButton'>Sign In</button>{' '}
-						<Link to='/' className='formFieldLink'>
-							Create an account
-						</Link>
-					</div>
-
-					<div className='socialMediaButtons'>
-						<div className='facebookButton'>
-							<FacebookLoginButton onClick={() => alert('Hello')} />
-						</div>
-
-						<div className='instagramButton'>
-							<InstagramLoginButton onClick={() => alert('Hello')} />
-						</div>
-					</div>
-				</form>
-			</div>
+				props.setIsAuth(true);
+				window.location.href = '/dashboard';
+			},
+			(error) => setLoading(false)
 		);
-	}
-}
+	};
 
+	return (
+		<div className='formCenter'>
+			<form className='formFields' onSubmit={handleSubmit}>
+				<div className='formField'>
+					<label className='formFieldLabel' htmlFor='email'>
+						EMail Address
+					</label>
+					<input
+						type='email'
+						id='email'
+						className='formFieldInput'
+						placeholder='Enter your email'
+						name='email'
+						value={email}
+						onChange={setEmail}
+					/>
+				</div>
+
+				<div className='formField'>
+					<label className='formFieldLabel' htmlFor='password'>
+						Password
+					</label>
+					<input
+						type='password'
+						id='password'
+						className='formFieldInput'
+						placeholder='Enter your password'
+						name='password'
+						value={password}
+						onChange={setPassword}
+					/>
+				</div>
+
+				<div className='formField'>
+					<button className='formFieldButton'>Sign In</button>{' '}
+					<Link to='/' className='formFieldLink'>
+						Create an account
+					</Link>
+				</div>
+			</form>
+		</div>
+	);
+};
 
 export default SignIn;

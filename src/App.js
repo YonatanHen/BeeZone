@@ -9,26 +9,25 @@ import ErrorPage from './components/404/404';
 import Lobby from './components/lobby';
 // import ErrorPage from './components/errorPage';
 import { Dashboard } from './components/dashboard/dashboard';
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function App() {
-	return (
-		<div>
-			{/* <Switch>
-         <Route exact path={["/", "/lobby"]}>
-           <Redirect to="/lobby#/sign-up" />
-            <Lobby />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-          <Route path="*">
-            <ErrorPage />
-          </Route>
+	const [isAuth, setIsAuth] = useState(false);
+	const history = useHistory();
 
-        </Switch> */}
-			<Dashboard />
-			{/* <Lobby /> */}
-		</div>
+	return (
+		<Switch>
+			<Route exact path='/'>
+				<Lobby setIsAuth={setIsAuth} />
+			</Route>
+			<Route exact path='/dashboard'>
+				<Dashboard auth={isAuth} />
+			</Route>
+			<Route path='*'>
+				<ErrorPage />
+			</Route>
+		</Switch>
 	);
 }
 
