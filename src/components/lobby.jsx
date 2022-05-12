@@ -28,7 +28,7 @@ const Lobby = ({ setIsAuth }) => {
 						<NavLink
 							exact
 							to='/sign-up'
-							// activeClassName='pageSwitcherItem-active'
+							activeClassName='pageSwitcherItem-active'
 							className='pageSwitcherItem'
 						>
 							Sign Up
@@ -37,7 +37,7 @@ const Lobby = ({ setIsAuth }) => {
 					<div className='formTitle'>
 						<Link
 							to='/sign-in'
-							// activeClassName='formTitleLink-active'
+							activeClassName='formTitleLink-active'
 							className='formTitleLink'
 						>
 							Sign In
@@ -46,7 +46,7 @@ const Lobby = ({ setIsAuth }) => {
 						<NavLink
 							exact
 							to='/sign-up'
-							// activeClassName='formTitleLink-active'
+							activeClassName='formTitleLink-active'
 							className='formTitleLink'
 						>
 							Sign Up

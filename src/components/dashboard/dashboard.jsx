@@ -27,7 +27,6 @@ const customStyles = {
 };
 export const Dashboard = ({ auth }) => {
 	// console.log(auth);
-	const [ScreenshootClicked, setScreenshootClicked] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
 	const [name, setName] = useState(sessionStorage.getItem('name'));
@@ -239,7 +238,9 @@ export const Dashboard = ({ auth }) => {
 									marginLeft: '.9rem',
 								}}
 								value={name || ''}
-								onChange={(e)=>{setName(e.target.value)}}
+								onChange={(e) => {
+									setName(e.target.value);
+								}}
 							/>
 
 							<label
@@ -252,7 +253,9 @@ export const Dashboard = ({ auth }) => {
 								id='password'
 								style={{ width: '90%', marginLeft: '.9rem' }}
 								value={password || ''}
-								onChange={(e)=>{setPassword(e.target.value)}}
+								onChange={(e) => {
+									setPassword(e.target.value);
+								}}
 							/>
 
 							<label
@@ -266,7 +269,9 @@ export const Dashboard = ({ auth }) => {
 								id='email'
 								style={{ width: '90%', marginLeft: '.9rem' }}
 								value={email || ''}
-								onChange={(e)=>{setEmail(e.target.value)}}
+								onChange={(e) => {
+									setEmail(e.target.value);
+								}}
 							/>
 							<div style={{ display: 'flex', height: '40%' }}>
 								<button
