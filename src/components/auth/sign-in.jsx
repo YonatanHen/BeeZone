@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { userService } from '../../services/user.service';
 
 const SignIn = (props) => {
-	const [email, setEmail] = useState('paul@g.com');
+	const [name, setName] = useState('test');
+	const [email, setEmail] = useState('test@test.com');
 	const [password, setPassword] = useState('123456');
 	const [submitted, setSubmitted] = useState(false);
 	const [loading, setLoading] = useState(false);
@@ -26,10 +27,10 @@ const SignIn = (props) => {
 
 		userService.login(email, password).then(
 			(user) => {
+				sessionStorage.setItem('name', name);
 				sessionStorage.setItem('email', email);
 				sessionStorage.setItem('password', password);
 				// console.log(user);
-				sessionStorage.setItem('name', user.displayName);
 
 				props.setIsAuth(true);
 				window.location.href = '/dashboard';
