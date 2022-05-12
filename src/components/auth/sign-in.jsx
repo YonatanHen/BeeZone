@@ -52,7 +52,9 @@ const SignIn = (props) => {
 						placeholder='Enter your email'
 						name='email'
 						value={email}
-						onChange={setEmail}
+						onChange={(e) => {
+							setEmail(e.target.value);
+						}}
 					/>
 				</div>
 
@@ -67,7 +69,9 @@ const SignIn = (props) => {
 						placeholder='Enter your password'
 						name='password'
 						value={password}
-						onChange={setPassword}
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
 					/>
 				</div>
 

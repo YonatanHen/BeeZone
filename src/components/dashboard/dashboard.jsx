@@ -26,7 +26,7 @@ const customStyles = {
 	},
 };
 export const Dashboard = ({ auth }) => {
-	console.log(auth);
+	// console.log(auth);
 	const [ScreenshootClicked, setScreenshootClicked] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
@@ -132,8 +132,14 @@ export const Dashboard = ({ auth }) => {
 		// references are now sync'd and can be accessed.
 		subtitle.style.color = '#fff';
 	}
-
+	console.log(localStorage.getItem('user'));
 	let subtitle;
+
+	const submitChanges = () => {
+		sessionStorage.setItem('name', name);
+		sessionStorage.setItem('password', password);
+		sessionStorage.setItem('email', email);
+	};
 
 	return (
 		<div>
@@ -141,7 +147,7 @@ export const Dashboard = ({ auth }) => {
 				<div className='nav-container'>
 					<div className='logo-container'>
 						<GiTreeBeehive className='logo' />
-						<h3>SmartBee</h3>
+						<h3>BeeZone</h3>
 					</div>
 					<nav className='navMenu'>
 						<button className='refresh-button' onClick={refresh}>
@@ -158,6 +164,7 @@ export const Dashboard = ({ auth }) => {
 							onClick={() => {
 								userService.logout();
 								console.log('Logout');
+								window.location.href = '/';
 							}}
 						>
 							Sign out
@@ -232,7 +239,7 @@ export const Dashboard = ({ auth }) => {
 									marginLeft: '.9rem',
 								}}
 								value={name || ''}
-								onChange={setName}
+								onChange={(e)=>{setName(e.target.value)}}
 							/>
 
 							<label
@@ -245,7 +252,7 @@ export const Dashboard = ({ auth }) => {
 								id='password'
 								style={{ width: '90%', marginLeft: '.9rem' }}
 								value={password || ''}
-								onChange={setPassword}
+								onChange={(e)=>{setPassword(e.target.value)}}
 							/>
 
 							<label
@@ -259,7 +266,7 @@ export const Dashboard = ({ auth }) => {
 								id='email'
 								style={{ width: '90%', marginLeft: '.9rem' }}
 								value={email || ''}
-								onChange={setEmail}
+								onChange={(e)=>{setEmail(e.target.value)}}
 							/>
 							<div style={{ display: 'flex', height: '40%' }}>
 								<button
@@ -268,6 +275,7 @@ export const Dashboard = ({ auth }) => {
 										padding: '0.5rem',
 										margin: 'auto',
 									}}
+									onClick={submitChanges}
 								>
 									Submit
 								</button>
