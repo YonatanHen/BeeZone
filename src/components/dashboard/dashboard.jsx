@@ -130,7 +130,6 @@ export const Dashboard = ({ auth }) => {
 	}
 
 	function afterOpenModal() {
-		// references are now sync'd and can be accessed.
 		subtitle.style.color = '#fff'
 	}
 	console.log(localStorage.getItem('user'))
