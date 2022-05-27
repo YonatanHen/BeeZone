@@ -134,7 +134,7 @@ export const Dashboard = ({ auth }) => {
 	}
 	console.log(localStorage.getItem('user'))
 	let subtitle
-
+//
 	const submitChanges = () => {
 		sessionStorage.setItem('name', name)
 		sessionStorage.setItem('password', password)
