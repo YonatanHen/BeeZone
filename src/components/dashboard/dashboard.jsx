@@ -119,7 +119,7 @@ export const Dashboard = ({ auth }) => {
 				})
 				num += 1
 			} else {
-				alert('bad temperature or humidity')
+				alert('bad temperature or humidity, beehome can be in danger!')
 			}
 		}, 5000)
 		return () => clearInterval(interval)
