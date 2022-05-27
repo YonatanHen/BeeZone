@@ -128,7 +128,7 @@ export const Dashboard = ({ auth }) => {
 	const refresh = () => {
 		window.location.reload(true)
 	}
-
+//
 	function afterOpenModal() {
 		subtitle.style.color = '#fff'
 	}
