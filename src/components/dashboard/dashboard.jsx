@@ -1,14 +1,22 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Chart } from 'primereact/chart';
-import axios from 'axios';
-import Webcam from 'react-webcam';
-import { Redirect } from 'react-router-dom';
-import { userService } from '../../services/user.service';
-import { GiTreeBeehive } from 'react-icons/gi';
-import '../dashboard/dashboard.css';
-import Modal from 'react-modal';
+import React, { Component, useEffect, useState } from 'react'
+import { Chart } from 'primereact/chart'
+import axios from 'axios'
+import Webcam from 'react-webcam'
+import { Redirect } from 'react-router-dom'
+import { userService } from '../../services/user.service'
+import { GiTreeBeehive } from 'react-icons/gi'
+import { geolocated } from 'react-geolocated'
+import '../dashboard/dashboard.css'
+import Modal from 'react-modal'
 
-let num = 0;
+let num = 0
+let location = { lat: 0, lon: 0 }
+
+navigator.geolocation.getCurrentPosition(function (position) {
+	location.lat = position.coords.latitude
+	location.lon = position.coords.longitude
+})
+
 const customStyles = {
 	content: {
 		top: '50%',
@@ -24,14 +32,14 @@ const customStyles = {
 		backgroundColor: 'rgba(255, 239, 226,1)',
 		backgroundBlendMode: 'overlay',
 	},
-};
+}
 export const Dashboard = ({ auth }) => {
 	// console.log(auth);
-	const [showModal, setShowModal] = useState(false);
+	const [showModal, setShowModal] = useState(false)
 
-	const [name, setName] = useState(sessionStorage.getItem('name'));
-	const [password, setPassword] = useState(sessionStorage.getItem('password'));
-	const [email, setEmail] = useState(sessionStorage.getItem('email'));
+	const [name, setName] = useState(sessionStorage.getItem('name'))
+	const [password, setPassword] = useState(sessionStorage.getItem('password'))
+	const [email, setEmail] = useState(sessionStorage.getItem('email'))
 
 	const [tempData, setTempData] = useState({
 		labels: [],
@@ -44,7 +52,7 @@ export const Dashboard = ({ auth }) => {
 				tension: 0.4,
 			},
 		],
-	});
+	})
 
 	const [humData, setHumData] = useState({
 		labels: [],
@@ -57,32 +65,32 @@ export const Dashboard = ({ auth }) => {
 				tension: 0.4,
 			},
 		],
-	});
+	})
 
-	const [dates, setDates] = useState([]);
-	const [temperatures, setTemperatures] = useState([]);
-	const [humidities, setHumidities] = useState([]);
-	const [clicked, setClicked] = useState(false);
+	const [dates, setDates] = useState([])
+	const [temperatures, setTemperatures] = useState([])
+	const [humidities, setHumidities] = useState([])
+	const [clicked, setClicked] = useState(false)
 
 	const openModal = () => {
-		setShowModal(true);
-	};
+		setShowModal(true)
+	}
 
 	const closeModal = () => {
-		setShowModal(false);
-	};
+		setShowModal(false)
+	}
 
 	useEffect(() => {
 		const interval = setInterval(async () => {
-			const response = await axios.get(`http://127.0.0.1:8000/get-data/`);
+			const response = await axios.get(`http://127.0.0.1:8000/get-data/`)
 			if (response.status === 200) {
-				const resData = response.data;
+				const resData = response.data
 
-				setTemperatures([...temperatures, resData.temperature]);
+				setTemperatures([...temperatures, resData.temperature])
 
-				setHumidities([...humidities, resData.humidity]);
+				setHumidities([...humidities, resData.humidity])
 
-				setDates([...dates, resData.date]);
+				setDates([...dates, resData.date])
 
 				setTempData({
 					labels: dates,
@@ -95,7 +103,7 @@ export const Dashboard = ({ auth }) => {
 							data: temperatures,
 						},
 					],
-				});
+				})
 
 				setHumData({
 					labels: dates,
@@ -108,37 +116,31 @@ export const Dashboard = ({ auth }) => {
 							data: humidities,
 						},
 					],
-				});
-				num += 1;
+				})
+				num += 1
 			} else {
-				alert('bad temperature or humidity');
+				alert('bad temperature or humidity')
 			}
-		}, 5000);
-
-		// console.log(dates);
-		// console.log(temperatures);
-		return () => clearInterval(interval);
-	});
-	// if (!auth) {
-	// 	return <Redirect to='/' />;
-	// }
+		}, 5000)
+		return () => clearInterval(interval)
+	})
 
 	const refresh = () => {
-		window.location.reload(true);
-	};
+		window.location.reload(true)
+	}
 
 	function afterOpenModal() {
 		// references are now sync'd and can be accessed.
-		subtitle.style.color = '#fff';
+		subtitle.style.color = '#fff'
 	}
-	console.log(localStorage.getItem('user'));
-	let subtitle;
+	console.log(localStorage.getItem('user'))
+	let subtitle
 
 	const submitChanges = () => {
-		sessionStorage.setItem('name', name);
-		sessionStorage.setItem('password', password);
-		sessionStorage.setItem('email', email);
-	};
+		sessionStorage.setItem('name', name)
+		sessionStorage.setItem('password', password)
+		sessionStorage.setItem('email', email)
+	}
 
 	return (
 		<div>
@@ -161,9 +163,9 @@ export const Dashboard = ({ auth }) => {
 						<button
 							className='button'
 							onClick={() => {
-								userService.logout();
-								console.log('Logout');
-								window.location.href = '/';
+								userService.logout()
+								console.log('Logout')
+								window.location.href = '/'
 							}}
 						>
 							Sign out
@@ -239,7 +241,7 @@ export const Dashboard = ({ auth }) => {
 								}}
 								value={name || ''}
 								onChange={(e) => {
-									setName(e.target.value);
+									setName(e.target.value)
 								}}
 							/>
 
@@ -254,7 +256,7 @@ export const Dashboard = ({ auth }) => {
 								style={{ width: '90%', marginLeft: '.9rem' }}
 								value={password || ''}
 								onChange={(e) => {
-									setPassword(e.target.value);
+									setPassword(e.target.value)
 								}}
 							/>
 
@@ -270,7 +272,7 @@ export const Dashboard = ({ auth }) => {
 								style={{ width: '90%', marginLeft: '.9rem' }}
 								value={email || ''}
 								onChange={(e) => {
-									setEmail(e.target.value);
+									setEmail(e.target.value)
 								}}
 							/>
 							<div style={{ display: 'flex', height: '40%' }}>
@@ -289,21 +291,16 @@ export const Dashboard = ({ auth }) => {
 					</div>
 				</Modal>
 				<div className='dashboard-container'>
-					<Chart
-						className='chart'
-						type='line'
-						data={tempData}
-						//  options={basicOptions}
-					/>
-
-					<Chart
-						className='chart'
-						type='line'
-						data={humData}
-						//  options={basicOptions}
-					/>
+					<Chart className='chart' type='line' data={tempData} />
+					<Chart className='chart' type='line' data={humData} />
+				</div>
+				<div className='location'>
+					<h3>Your location is:</h3>
+					<h6>
+						lat: {location.lat} lon: {location.lon}
+					</h6>
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
