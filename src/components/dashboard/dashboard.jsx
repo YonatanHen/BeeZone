@@ -1,21 +1,18 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { Component, useEffect, useState, useRef } from 'react'
 import { Chart } from 'primereact/chart'
 import axios from 'axios'
 import Webcam from 'react-webcam'
-import { Redirect } from 'react-router-dom'
 import { userService } from '../../services/user.service'
 import { GiTreeBeehive } from 'react-icons/gi'
-import { geolocated } from 'react-geolocated'
 import '../dashboard/dashboard.css'
 import Modal from 'react-modal'
 
 let num = 0
-let location = { lat: 0, lon: 0 }
+let location = {
+	lat: undefined,
+	lon: undefined
+}
 
-navigator.geolocation.getCurrentPosition(function (position) {
-	location.lat = position.coords.latitude
-	location.lon = position.coords.longitude
-})
 
 const customStyles = {
 	content: {
@@ -34,12 +31,14 @@ const customStyles = {
 	},
 }
 export const Dashboard = ({ auth }) => {
-	// console.log(auth);
 	const [showModal, setShowModal] = useState(false)
 
 	const [name, setName] = useState(sessionStorage.getItem('name'))
 	const [password, setPassword] = useState(sessionStorage.getItem('password'))
 	const [email, setEmail] = useState(sessionStorage.getItem('email'))
+
+	const webRef = useRef(null)
+	let img
 
 	const [tempData, setTempData] = useState({
 		labels: [],
@@ -79,6 +78,13 @@ export const Dashboard = ({ auth }) => {
 	const closeModal = () => {
 		setShowModal(false)
 	}
+
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(function (position) {
+			location.lat = position.coords.latitude
+			location.lon = position.coords.longitude
+		})
+	}, [])
 
 	useEffect(() => {
 		const interval = setInterval(async () => {
@@ -128,13 +134,13 @@ export const Dashboard = ({ auth }) => {
 	const refresh = () => {
 		window.location.reload(true)
 	}
-//
+
 	function afterOpenModal() {
 		subtitle.style.color = '#fff'
 	}
 	console.log(localStorage.getItem('user'))
 	let subtitle
-//
+
 	const submitChanges = () => {
 		sessionStorage.setItem('name', name)
 		sessionStorage.setItem('password', password)
@@ -150,12 +156,9 @@ export const Dashboard = ({ auth }) => {
 						<h3>BeeZone</h3>
 					</div>
 					<nav className='navMenu'>
-						<button className='refresh-button' onClick={refresh}>
+						<button className=' button refresh-button' onClick={refresh}>
 							Refresh Page
 						</button>
-						{/* <Link className='button' to='/dashboard'>
-							Refresh Page
-						</Link> */}
 						<a className='button' onClick={openModal}>
 							Edit Profile
 						</a>
@@ -184,7 +187,7 @@ export const Dashboard = ({ auth }) => {
 							Turn Off Camera{' '}
 						</button>
 					)}
-					{clicked && <Webcam className='webcam' audio={false} />}
+					{clicked && <Webcam className='webcam' audio={false} ref={webRef} />}
 				</div>
 				<Modal
 					isOpen={showModal}
@@ -212,7 +215,6 @@ export const Dashboard = ({ auth }) => {
 					</h2>
 					<div
 						style={{
-							// backgroundColor: 'red',
 							width: '90%',
 							height: '80%',
 							margin: 'auto',
@@ -294,10 +296,14 @@ export const Dashboard = ({ auth }) => {
 					<Chart className='chart' type='line' data={humData} />
 				</div>
 				<div className='location'>
-					<h3>Your location is:</h3>
-					<h6>
-						lat: {location.lat} lon: {location.lon}
-					</h6>
+					{location.lat != undefined && location.lon != undefined && (
+						<>
+							<h3>Your location is:</h3>
+							<h6>
+								lat: {location.lat} lon: {location.lon}
+							</h6>
+						</>
+					)}
 				</div>
 			</div>
 		</div>
