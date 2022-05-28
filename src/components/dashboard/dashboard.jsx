@@ -10,9 +10,8 @@ import Modal from 'react-modal'
 let num = 0
 let location = {
 	lat: undefined,
-	lon: undefined
+	lon: undefined,
 }
-
 
 const customStyles = {
 	content: {
@@ -36,6 +35,11 @@ export const Dashboard = ({ auth }) => {
 	const [name, setName] = useState(sessionStorage.getItem('name'))
 	const [password, setPassword] = useState(sessionStorage.getItem('password'))
 	const [email, setEmail] = useState(sessionStorage.getItem('email'))
+	const [location, setLocation] = useState({lat: undefined, lon: undefined})
+	
+	// navigator.geolocation.getCurrentPosition((position) => {
+	// 	return { lat: position.coords.latitude, lon: position.coords.longitude }
+	// }
 
 	const webRef = useRef(null)
 	let img
@@ -80,9 +84,13 @@ export const Dashboard = ({ auth }) => {
 	}
 
 	useEffect(() => {
-		navigator.geolocation.getCurrentPosition(function (position) {
-			location.lat = position.coords.latitude
-			location.lon = position.coords.longitude
+		navigator.geolocation.getCurrentPosition((position) => {
+			const pos = {
+				lat: position.coords.latitude,
+				lon: position.coords.longitude
+			}
+
+			setLocation(pos)
 		})
 	}, [])
 
