@@ -31,15 +31,11 @@ const customStyles = {
 }
 export const Dashboard = ({ auth }) => {
 	const [showModal, setShowModal] = useState(false)
-
+	const [showFAQModal, setShowFAQModal] = useState(false)
 	const [name, setName] = useState(sessionStorage.getItem('name'))
 	const [password, setPassword] = useState(sessionStorage.getItem('password'))
 	const [email, setEmail] = useState(sessionStorage.getItem('email'))
-	const [location, setLocation] = useState({lat: undefined, lon: undefined})
-	
-	// navigator.geolocation.getCurrentPosition((position) => {
-	// 	return { lat: position.coords.latitude, lon: position.coords.longitude }
-	// }
+	const [location, setLocation] = useState({ lat: undefined, lon: undefined })
 
 	const webRef = useRef(null)
 	let img
@@ -75,19 +71,11 @@ export const Dashboard = ({ auth }) => {
 	const [humidities, setHumidities] = useState([])
 	const [clicked, setClicked] = useState(false)
 
-	const openModal = () => {
-		setShowModal(true)
-	}
-
-	const closeModal = () => {
-		setShowModal(false)
-	}
-
 	useEffect(() => {
 		navigator.geolocation.getCurrentPosition((position) => {
 			const pos = {
 				lat: position.coords.latitude,
-				lon: position.coords.longitude
+				lon: position.coords.longitude,
 			}
 
 			setLocation(pos)
@@ -164,12 +152,15 @@ export const Dashboard = ({ auth }) => {
 						<h3>BeeZone</h3>
 					</div>
 					<nav className='navMenu'>
+						<button className='button' onClick={() => setShowFAQModal(true)}>
+							FAQ
+						</button>
 						<button className=' button refresh-button' onClick={refresh}>
 							Refresh Page
 						</button>
-						<a className='button' onClick={openModal}>
+						<button className='button' onClick={() => setShowModal(true)}>
 							Edit Profile
-						</a>
+						</button>
 						<button
 							className='button'
 							onClick={() => {
@@ -180,7 +171,7 @@ export const Dashboard = ({ auth }) => {
 						>
 							Sign out
 						</button>
-						<div className='dot'></div>
+						{/* <div className='dot'></div> */}
 					</nav>
 				</div>
 				<div className='cam-box'>
@@ -200,7 +191,7 @@ export const Dashboard = ({ auth }) => {
 				<Modal
 					isOpen={showModal}
 					onAfterOpen={afterOpenModal}
-					onRequestClose={closeModal}
+					onRequestClose={() => setShowModal(false)}
 					style={customStyles}
 					contentLabel='Example Modal'
 					ariaHideApp={false}
@@ -219,7 +210,7 @@ export const Dashboard = ({ auth }) => {
 						}}
 						ref={(_subtitle) => (subtitle = _subtitle)}
 					>
-						EDIT PERSONAL INFORMATION
+						PERSONAL INFO
 					</h2>
 					<div
 						style={{
@@ -299,6 +290,40 @@ export const Dashboard = ({ auth }) => {
 						</form>
 					</div>
 				</Modal>
+
+				<Modal
+					isOpen={showFAQModal}
+					onAfterOpen={afterOpenModal}
+					onRequestClose={() => setShowFAQModal(false)}
+					style={customStyles}
+					contentLabel='Example Modal'
+					ariaHideApp={false}
+				>
+					<h2
+						style={{
+							width: '90%',
+							marginLeft: '0.9rem',
+							marginBottom: '1.2rem',
+							backgroundColor: 'rgba(255, 224, 110,1)',
+							color: 'white',
+							textAlign: 'center',
+							height: '3vh',
+							marginBottom: '1rem',
+							fontSize: '1rem',
+						}}
+						ref={(_subtitle) => (subtitle = _subtitle)}
+					>
+						FAQ
+					</h2>
+					<h4 style={{ fontWeight: 700 }}>How does the Beehome work?</h4>
+					<p>The Beehome has cameras inside of it, robotic arms, sensors and other systems, that allow it to execute what a Beekeeper would normally do. The robotic arms within Beehome treat pests, feed, prevent swarming from happening and more, similar to what a Beekeeper would have done. Beekeepers can also remote control the Beehome over the web so they have full flexibility with the upkeep of their colonies.</p>
+					<h4 style={{ fontWeight: 700 }}>How do the hives within Beehome work?</h4>
+					<p>The hives look similar to what exists today. The bees’ living quarters did not change much, except for the fact that now a robot extracts frames and not a human. The bees do not get to experience the robot because when a frame is extracted for inspection, the bees remain within their hive.</p>
+					<h4 style={{ fontWeight: 700 }}>How many colonies are housed within a single Beehome device?</h4>
+					<p>24 full-fledged colonies</p>	
+				</Modal>
+
+
 				<div className='dashboard-container'>
 					<Chart className='chart' type='line' data={tempData} />
 					<Chart className='chart' type='line' data={humData} />
