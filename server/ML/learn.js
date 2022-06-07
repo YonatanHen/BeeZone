@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-native-reassign */
+/* eslint-disable no-undef */
 const tf = require('@tensorflow/tfjs');
 const {
 	checkArrayLengths,
@@ -11,7 +14,6 @@ let isOk = true;
 const sensor = require('./sensor.json');
 
 // const trainProcess = () => {
-// train data
 const data = sensor.map((item) => [item.RH85, item.T85]);
 // console.log(data);
 const trainData = tf.tensor2d(data);
@@ -55,7 +57,7 @@ model.compile({
 
 // test data
 const getTestData = (testingData) => {
-	return (test = tf.tensor2d([[testingData[0], testingData[1]]]));
+	return (test = tf.tensor2d([[testingData[0], testingData[1]]])); // creating a 2x1 tensor
 };
 
 // train/fit our network

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -44,7 +45,7 @@ const SignIn = (props) => {
 			<form className='formFields' onSubmit={handleSubmit}>
 				<div className='formField'>
 					<label className='formFieldLabel' htmlFor='email'>
-						EMail Address
+						Email Address
 					</label>
 					<input
 						type='email'
